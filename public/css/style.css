@@ -1,0 +1,23 @@
+header {
+    display: flex;
+    width: 100%;
+}
+
+nav {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav h3 {
+    width: 100%;
+}
+
+.authenticate {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
