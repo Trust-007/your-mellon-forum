@@ -6,24 +6,35 @@
         <p>Created: {{$post->creation_date}}</p>
     </div>
     <div>
-        @unless($post->comments()->count() == 0)
+        @unless($comments->count() == 0)
             <ul>
-                @foreach ($post->comments() as $comment) 
+                @foreach ($comments as $comment) 
                 <li>
-                    {{$comment->text}}
+                    <a href="/posts/{{$post->id}}/comments/{{$comment->id}}">
+                      <p>{{$comment->text}}</p>
+                       <p>{{$comment->user->name}}</p>
+                    </a>    
                 </li>
                 @endforeach
             </ul>
+            
         @else
            <p>No comment made</p>
+           <div>
+                @if(auth()->user()->id == $post->user->id)
+                    <form method="POST" action="/posts/{{$post->id}}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete Post</button>
+                    </form>
+                    <a href="/posts/{{$post->id}}/edit">Update Post</a>
+                @endif    
+           </div>
+           
         @endunless
-           <form method="POST" action="/posts/{{$post->id}}">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-           </form>
-            <a href="/posts/{{$post->id}}/edit">Update</a>
-            <a href="/comments/create">Add Comment</a>
+
+        
+        <a href="/posts/{{$post->id}}/comments/create">Add Comment</a>
     </div>
     
 </x-layout>

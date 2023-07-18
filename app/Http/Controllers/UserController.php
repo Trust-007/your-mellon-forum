@@ -29,8 +29,7 @@ class UserController extends Controller
         if( $request->is('api/*')){
             return response()->json($user);
         } else {
-            dd($user);
-            return redirect('/');
+            return redirect('/posts');
         }
     }
 

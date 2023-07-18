@@ -10,9 +10,9 @@ class PostController extends Controller
 {
     public function index(Request $request) {
         if( $request->is('api/*')){
-            return response()->json(Post::all()->sortBy('created_at'));
+            return response()->json(Post::orderBy('created_at', 'desc')->filter(request(['search']))->get());
         }else{
-            return view('posts.index', ['posts' => Post::latest()->filter(request(['search']))->simplePaginate(4)]);
+            return view('posts.index', ['posts' => Post::orderBy('created_at', 'desc')->filter(request(['search']))->get()]);
         }
     }
 
@@ -20,7 +20,7 @@ class PostController extends Controller
         if( $request->is('api/*')){
             return response()->json($post);
         } else {
-            return view('posts.show', ['post' => $post]);
+            return view('posts.show', ['post' => $post, 'comments' => $post->comments]);
         }
     }
 
@@ -47,7 +47,7 @@ class PostController extends Controller
     }
 
     public function update(Request $request, Post $post) {
-        if ($post->comments()->count() == 0) {
+        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user->id) {
             $formFields = $request->validate([
             'title' => 'required',
             'text' => 'required',
@@ -64,7 +64,7 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post) {
-        if ($post->comments()->count() == 0) {
+        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user->id) {
            $post->delete();
         }
        return redirect('/posts')->with('message', 'Post Deleted');
