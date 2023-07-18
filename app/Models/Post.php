@@ -18,4 +18,14 @@ class Post extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+
+    protected $fillable = ['title', 'text', 'creation_date', 'user_id'];
+
+    public function scopeFilter($query, array $filters) {
+        if($filters['search'] ?? false) {
+           $query->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('text', 'like', '%' . request('search') . '%')
+            ->orWhere('creation_date', 'like', '%' . request('search') . '%');
+        }
+    }
 }

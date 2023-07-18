@@ -10,11 +10,21 @@
 <body>
     <header>
         <nav>
-            <h3>Your Mellon Forum</h3>
-            <ul class="authenticate">
-                <li><a href="">Sign Up</a></li>
-                <li><a href="">Login</a></li>
-            </ul>
+            <h3><a href="/">Your Mellon Forum</a></h3>
+            @auth()
+               <div class="logged-in">
+                <h4>Welcome {{auth()->user()->name}}</h4>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
+               </div>
+            @else  
+                <ul class="authenticate">
+                    <li><a href="/register">Sign Up</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            @endauth
         </nav>
     </header>
     <main>{{$slot}}</main>

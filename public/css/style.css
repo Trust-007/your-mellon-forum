@@ -3,6 +3,10 @@ header {
     width: 100%;
 }
 
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 nav {
     width: 90%;
     display: flex;
@@ -14,10 +18,35 @@ nav h3 {
     width: 100%;
 }
 
+nav h3 a {
+    text-decoration: none;
+    color: black;
+}
+
+.logged-in {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .authenticate {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     list-style: none;
+}
+
+.form-page h1 {
+    text-align: center;
+}
+
+.form-container {
+    width: 50%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background-color: grey;
 }
 

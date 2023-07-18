@@ -26,8 +26,12 @@ class UserController extends Controller
         $user = User::create($formFields);
         
         auth()->login($user);
-
-        return redirect('/');
+        if( $request->is('api/*')){
+            return response()->json($user);
+        } else {
+            dd($user);
+            return redirect('/');
+        }
     }
 
     public function logout(Request $request) {
@@ -35,7 +39,11 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'Logged out');
+        if( $request->is('api/*')){
+           return response()->json(['message' => 'Logged out successfully'], 200);
+        } else {
+           return redirect('/')->with('message', 'Logged out');
+        }
     }
 
     public function login() {
@@ -51,7 +59,7 @@ class UserController extends Controller
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'You are logged in');
+            return redirect('/posts')->with('message', 'You are logged in');
         }
         
         return back();
