@@ -21,14 +21,16 @@
         @else
            <p>No comment made</p>
            <div>
-                @if(auth()->user()->id == $post->user->id)
-                    <form method="POST" action="/posts/{{$post->id}}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Delete Post</button>
-                    </form>
-                    <a href="/posts/{{$post->id}}/edit">Update Post</a>
-                @endif    
+                @auth()
+                    @if(auth()->user()->id == $post->user_id)
+                        <form method="POST" action="/posts/{{$post->id}}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete Post</button>
+                        </form>
+                        <a href="/posts/{{$post->id}}/edit">Update Post</a>
+                    @endif    
+                @endauth
            </div>
            
         @endunless

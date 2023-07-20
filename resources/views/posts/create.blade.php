@@ -1,5 +1,6 @@
 <x-layout>
     <div class="form-page">
+        <a href="/posts">back</a>
         <h1>Create a new Post</h1>
         <form method="POST" action="/posts/store" class="form-container">
             @csrf

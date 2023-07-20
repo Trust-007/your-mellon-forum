@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -24,11 +27,13 @@ class UserController extends Controller
         $formFields['password'] = bcrypt($formFields['password']);
 
         $user = User::create($formFields);
-        
-        auth()->login($user);
+        $user->sendEmailVerificationNotification();
+        // $user['hash'] = Str::uuid();
+        // Mail::to($user->email)->send(new VerifyEmail($user));
         if( $request->is('api/*')){
             return response()->json($user);
         } else {
+            auth()->login($user);
             return redirect('/posts');
         }
     }

@@ -47,7 +47,7 @@ class PostController extends Controller
     }
 
     public function update(Request $request, Post $post) {
-        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user->id) {
+        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
             $formFields = $request->validate([
             'title' => 'required',
             'text' => 'required',
@@ -64,7 +64,7 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post) {
-        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user->id) {
+        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
            $post->delete();
         }
        return redirect('/posts')->with('message', 'Post Deleted');
