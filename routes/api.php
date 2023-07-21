@@ -37,12 +37,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->middleware('auth');
 });
 
-
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
     
-//     return redirect('/posts')->with('verified', true);
-// })->middleware(['signed', 'auth'])->name('verification.verify');
+    return redirect('/posts')->with('verified', true);
+})->middleware(['signed', 'auth'])->name('verification.verify');
 
 // Posts routes
 

@@ -41,7 +41,7 @@ class CommentController extends Controller
        if( $request->is('api/*')){ 
          return response()->json(['message' => 'Comment created successfully', 'data' =>$comment], 201);
        }else {
-        return redirect('/posts/'.$post->id);
+        return redirect('/posts/'.$post->id)->with('message', 'Comment created successfully');
        }
     }
 
@@ -72,7 +72,7 @@ class CommentController extends Controller
             if( $request->is('api/*')){  
                return response()->json(['message' => 'Comment updated successfully']);
             }else {
-               return redirect('/posts/'.$post->id);
+               return redirect('/posts/'.$post->id)->with('message', 'Comment updated successfully');
             }
         }
     }

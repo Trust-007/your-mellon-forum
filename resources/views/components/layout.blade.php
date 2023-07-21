@@ -28,5 +28,6 @@
         </nav>
     </header>
     <main>{{$slot}}</main>
+    <x-flash-message />
 </body>
 </html>

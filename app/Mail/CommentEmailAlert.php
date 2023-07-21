@@ -58,6 +58,6 @@ class CommentEmailAlert extends Mailable
     {
         return $this->from('simeontrust7@gmail.com', 'Trust Simeon')
         ->markdown('emails.new_comment_notification')
-                    ->subject('Verify Your Email Address');
+                    ->subject('You have a new comment');
     }
 }

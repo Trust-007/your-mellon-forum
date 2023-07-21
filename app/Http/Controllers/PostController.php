@@ -42,7 +42,7 @@ class PostController extends Controller
       if( $request->is('api/*')){
          return response()->json(['message' => 'Post Created Successfully'], 201);
       }else {
-          return redirect('/posts');
+          return redirect('/posts')->with('message', 'Post Created Successfully');
       }
     }
 
