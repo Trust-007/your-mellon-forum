@@ -1,7 +1,7 @@
 <x-layout>
-    <div>
-       <h1>Welcome</h1>
-       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam, cum ipsa, molestias deleniti magnam, dignissimos suscipit fugit reprehenderit quidem quos quibusdam at itaque necessitatibus in. Autem illo ipsa libero consequatur.</p>
+    <div class="welcome">
+       <h1>Welcome to Your Mellon Forum</h1>
+       <p>A site where you can post about your day, your favorite jokes and riddles, or what ever you feel like.</p>
        <a href="/posts">Posts</a>
     </div>   
 </x-layout>

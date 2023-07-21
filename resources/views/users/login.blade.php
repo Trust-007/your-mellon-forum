@@ -17,6 +17,6 @@
         <button type="submit">Login</button>
         </form>
 
-        <p>Don't have an account? <a href="/register">Sign up</a></p>
+        <p class="signup-login">Don't have an account? <a href="/register">Sign up</a></p>
     </div>    
   </x-layout>

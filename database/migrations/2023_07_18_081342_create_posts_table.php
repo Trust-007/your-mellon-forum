@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('text');
             $table->date('creation_date');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

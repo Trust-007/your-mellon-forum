@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyEmail extends Mailable
+class CommentEmailAlert extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -57,7 +57,7 @@ class VerifyEmail extends Mailable
     public function build()
     {
         return $this->from('simeontrust7@gmail.com', 'Trust Simeon')
-        ->markdown('emails.verify-email')
+        ->markdown('emails.new_comment_notification')
                     ->subject('Verify Your Email Address');
     }
 }

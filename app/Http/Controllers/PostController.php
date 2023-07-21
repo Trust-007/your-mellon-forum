@@ -38,8 +38,12 @@ class PostController extends Controller
       $formFields['user_id'] = auth()->id();
 
       Post::create($formFields);
-
-      return redirect('/posts');
+      
+      if( $request->is('api/*')){
+         return response()->json(['message' => 'Post Created Successfully'], 201);
+      }else {
+          return redirect('/posts');
+      }
     }
 
     public function edit(Post $post) {
@@ -47,26 +51,47 @@ class PostController extends Controller
     }
 
     public function update(Request $request, Post $post) {
-        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
-            $formFields = $request->validate([
-            'title' => 'required',
-            'text' => 'required',
-            ]);
-        
-            $post->update($formFields);
+        if($post->user_id == auth()->user()->id) { 
+            if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
+                $formFields = $request->validate([
+                'title' => 'required',
+                'text' => 'required',
+                ]);
+            
+                $post->update($formFields);
+                if( $request->is('api/*')){
+                    return response()->json(['message' => 'Post has been updated successfully']);
+                }else {
+                    return redirect('/posts/'.$post->id)->with('message', 'Post Edited');
+                }
+            
 
-            return redirect('/posts/'.$post->id)->with('message', 'Post Edited');
-
-        } else {
-            return back();
+            } else {
+                if( $request->is('api/*')){
+                    return response()->json(['message' => 'Post cannot be modified']);
+                }
+                return back();
+            }
         }
         
     }
 
-    public function destroy(Post $post) {
-        if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
-           $post->delete();
+    public function destroy(Post $post, Request $request) {
+        if($post->user_id == auth()->user()->id) { 
+            if ($post->comments()->count() == 0 && auth()->user()->id == $post->user_id) {
+                $post->delete();
+                if( $request->is('api/*')){
+                    return response()->json(['message' => 'Post Deleted']);
+                } else {
+                    return redirect('/posts')->with('message', 'Post Deleted');
+                }
+            }
+        } else {
+            if( $request->is('api/*')){
+                return response()->json(['message' => 'Post cannot be Deleted']);
+            }
+            return back();
         }
-       return redirect('/posts')->with('message', 'Post Deleted');
+        
     }
 }

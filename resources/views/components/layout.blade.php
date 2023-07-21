@@ -16,13 +16,13 @@
                 <h4>Welcome {{auth()->user()->name}}</h4>
                 <form method="POST" action="/logout">
                     @csrf
-                    <button type="submit">Logout</button>
+                    <button type="submit" class="auth-btn">Logout</button>
                 </form>
                </div>
             @else  
                 <ul class="authenticate">
-                    <li><a href="/register">Sign Up</a></li>
-                    <li><a href="/login">Login</a></li>
+                    <li class="auth-btn"><a href="/register">Sign Up</a></li>
+                    <li class="auth-btn"><a href="/login">Login</a></li>
                 </ul>
             @endauth
         </nav>

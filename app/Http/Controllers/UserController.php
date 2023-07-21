@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Mail\VerifyEmail;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -23,19 +20,14 @@ class UserController extends Controller
             'password' => ['required', 'confirmed']
         ]);
         
-        //hash password
         $formFields['password'] = bcrypt($formFields['password']);
 
         $user = User::create($formFields);
         $user->sendEmailVerificationNotification();
-        // $user['hash'] = Str::uuid();
-        // Mail::to($user->email)->send(new VerifyEmail($user));
-        if( $request->is('api/*')){
-            return response()->json($user);
-        } else {
-            auth()->login($user);
-            return redirect('/posts');
-        }
+        auth()->login($user);
+            
+        return redirect('/posts');
+        
     }
 
     public function logout(Request $request) {
@@ -43,11 +35,9 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        if( $request->is('api/*')){
-           return response()->json(['message' => 'Logged out successfully'], 200);
-        } else {
-           return redirect('/')->with('message', 'Logged out');
-        }
+        
+        return redirect('/')->with('message', 'Logged out');
+        
     }
 
     public function login() {
@@ -64,8 +54,10 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             return redirect('/posts')->with('message', 'You are logged in');
+            
         }
         
         return back();
     }
+
 }
