@@ -26,13 +26,13 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Protected route with Sanctum authentication
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/posts/store', [PostController::class, 'store'])->middleware('verify');
+    Route::post('/posts/store', [PostController::class, 'store'])->middleware('verified');
     Route::put('/posts/{post}', [PostController::class, 'update']);
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
     
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::post('/posts/{post}/comments/store', [CommentController::class, 'store']);
+    Route::post('/posts/{post}/comments/store', [CommentController::class, 'store'])->middleware('verified');
     Route::put('/posts/{post}/comments/{comment}', [CommentController::class, 'update']);
     Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
 });

@@ -43,8 +43,8 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 // Comments routes
 
-Route::get('/posts/{post}/comments/create', [CommentController::class, 'create'])->middleware('auth');
-Route::post('/posts/{post}/comments/store', [CommentController::class, 'store'])->middleware('auth');
+Route::get('/posts/{post}/comments/create', [CommentController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/posts/{post}/comments/store', [CommentController::class, 'store'])->middleware(['auth', 'verified']);
 Route::get('/posts/{post}/comments/{comment}/edit', [CommentController::class, 'edit'])->middleware('auth');
 Route::put('/posts/{post}/comments/{comment}', [CommentController::class, 'update'])->middleware('auth');
 Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->middleware('auth');
